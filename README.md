@@ -10,9 +10,9 @@ Heroku(Host)
 
 Axios
 
-bootstrap-vue
+Bootstrap-vue
 
-dotenv
+Dotenv
 
 ## Build Setup
 
