@@ -9,13 +9,15 @@ export default {
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" }
-    ],
+    ]
+  },
+
+  env: {
+    apiKey: process.env.API_KEY || "444";
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    "~/assets/loading.css"
-  ],
+  css: ["~/assets/loading.css"],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
@@ -24,9 +26,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    ['@nuxtjs/dotenv', { filename: '.env' }],
-  ],
+  buildModules: [["@nuxtjs/dotenv", { filename: ".env" }]],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
