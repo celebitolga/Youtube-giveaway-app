@@ -8,6 +8,7 @@
 
     <Winners :winnersData="{data: formData.data, peopleSelectNumber: formData.peopleSelectNumber}" v-if="formData.data" />
 
+    <SourceCode />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import Form from '@/components/Form'
 import GiveawayOwner from '@/components/GiveawayOwner'
 import Winners from '@/components/Winners'
 import Note from '@/components/Note'
+import SourceCode from '@/components/SourceCode'
 
 export default {
   data() {
@@ -32,6 +34,7 @@ export default {
     GiveawayOwner,
     Winners,
     Note,
+    SourceCode,
   },
   methods: {
     setDataFromForm(data) {
