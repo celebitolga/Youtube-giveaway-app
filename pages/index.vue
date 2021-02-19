@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <Form @formData="setDataFromForm($event)"/>
+    <Form @formData="setDataFromForm($event)" @giveawayOwnerData="giveawayOwner = $event"/>
     
     <Note />
 
-    <GiveawayOwner :giveawayOwnerData="formData.giveawayOwner" v-if="formData.giveawayOwner"/>
+    <GiveawayOwner :giveawayOwnerData="giveawayOwner" v-if="giveawayOwner"/>
 
     <Winners :winnersData="{data: formData.data, peopleSelectNumber: formData.peopleSelectNumber}" v-if="formData.data" />
 
@@ -21,10 +21,10 @@ export default {
   data() {
     return {
       formData: {
-        giveawayOwner: null,
         data: null,
         peopleSelectNumber: 1,
       },
+      giveawayOwner: null,
     }
   },
   components: {

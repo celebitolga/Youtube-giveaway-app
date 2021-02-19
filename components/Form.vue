@@ -8,7 +8,9 @@
           id="videoLink"
           v-model="userInput.videoLink"
           type="text"
+          :class="{'border-danger': error}"
           placeholder="Video linki"
+          @blur="sendVideoId"
           required
         ></b-form-input>
       </b-form-group>
@@ -64,6 +66,7 @@ export default {
       },
       show: true,
       loading: false,
+      error: false,
     };
   },
   methods: {
@@ -75,30 +78,36 @@ export default {
 
       const videoId = await this.getVideoId(this.userInput.videoLink);
       if(!videoId) {
-        return false;
+        this.loading = false;
+        this.error = true;
+        return;
       }
 
-      const giveawayOwner = await this.$axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&contentDetails&statistics&id=${ videoId }&key=${ $nuxt.context.env.apiKey }`)
-            .then(response => response.data.items[0]);
-      
-      if(this.userInput.comment.trim().length > 0) {
-        // For utf-8, there is comment
-        const comment = encodeURIComponent(this.userInput.comment.trim())
-        url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&searchTerms=${ comment }&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
-      } else {
-        // no comment
-        url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
+      try {
+        if(this.userInput.comment.trim().length > 0) {
+          // For utf-8, there is comment
+          const comment = encodeURIComponent(this.userInput.comment.trim())
+          url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&searchTerms=${ comment }&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
+        } else {
+          // no comment
+          url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
+        }
+
+        //Get peoples who did comment to video
+        const data = await this.$axios.get(url)
+              .then(response => response.data.items);
+
+        // emit data
+        this.$emit("formData", { data, peopleSelectNumber: this.userInput.peopleSelectNumber });
+
+        //loading screen
+        this.loading = false;
+        this.error = false;
+
+      } catch (error) {
+        this.loading = false;
+        this.error = true;
       }
-
-      //Get peoples who did comment to video
-      const data = await this.$axios.get(url)
-            .then(response => response.data.items);
-
-      // emit data, giveawayOwner
-      this.$emit("formData", { giveawayOwner, data, peopleSelectNumber: this.userInput.peopleSelectNumber });
-
-      //loading screen
-      this.loading = false;
     },
     onReset() {
       this.userInput = {
@@ -123,6 +132,37 @@ export default {
         return false;
       }
       return videoId;
+    },
+    async sendVideoId() {
+      this.loading = true;
+
+      const videoId = await this.getVideoId(this.userInput.videoLink);
+      if(!videoId) {
+        this.loading = false;
+        this.error = true;
+        return;
+      }
+
+      try {
+        const giveawayOwner = await this.$axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&contentDetails&statistics&id=${ videoId }&key=${ $nuxt.context.env.apiKey }`)
+              .then(response => response.data.items[0]);
+
+        if(!giveawayOwner) {
+          throw "Errorrrr";
+        }
+
+        // emit data, giveawayOwner
+        this.$emit("giveawayOwnerData", giveawayOwner);
+
+        //loading screen
+        this.loading = false;
+        this.error = false;
+
+      } catch (error) {
+        this.$emit("giveawayOwnerData", null);
+        this.loading = false;
+        this.error = true;
+      }
     },
   },
 
