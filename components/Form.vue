@@ -1,7 +1,9 @@
 <template>
   <div>
+    <Loading v-if="loading"/>
+
     <b-form @submit.prevent="onSubmit" @reset.prevent="onReset" v-if="show" class="mt-3">
-      <b-form-group label="Video Linki" label-for="videoLink">
+      <b-form-group label="Youtube video Linki" label-for="videoLink">
         <b-form-input
           id="videoLink"
           v-model="userInput.videoLink"
@@ -38,14 +40,21 @@
         ></b-form-input>
       </b-form-group>
     
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <div class="text-center">
+        <b-button type="submit" variant="primary">Çekiliş Yap</b-button>
+        <b-button type="reset" variant="danger">Formu Yenile</b-button>
+      </div>
     </b-form>
   </div>
 </template>
 
 <script>
+import Loading from '@/components/Loading'
+
 export default {
+  components: {
+    Loading,
+  },
   data() {
     return {
       userInput: {
@@ -69,7 +78,7 @@ export default {
         return false;
       }
       const giveawayOwner = await this.$axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&contentDetails&statistics&id=${ videoId }&key=${ process.env.API_KEY }`)
-            .then(response => response.data.items);
+            .then(response => response.data.items[0]);
       
       if(this.userInput.comment.trim().length > 0) {
         // For utf-8, there is comment
@@ -87,6 +96,7 @@ export default {
       // emit data, giveawayOwner
       this.$emit("formData", { giveawayOwner, data });
 
+      console.log(giveawayOwner);
       //loading screen
       this.loading = false;
     },
