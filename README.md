@@ -2,7 +2,7 @@
 https://youtube-giveaway-app.herokuapp.com/
 
 # Used Tecnologies
-Nuxt.js(Server Side - Vue.js)
+Nuxt.js(Client Side - Vue.js)
 
 Youtube API
 
