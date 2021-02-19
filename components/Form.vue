@@ -94,9 +94,8 @@ export default {
             .then(response => response.data.items);
 
       // emit data, giveawayOwner
-      this.$emit("formData", { giveawayOwner, data });
+      this.$emit("formData", { giveawayOwner, data, peopleSelectNumber: this.userInput.peopleSelectNumber });
 
-      console.log(giveawayOwner);
       //loading screen
       this.loading = false;
     },
