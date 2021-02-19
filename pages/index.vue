@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Form @formData="setDataFromForm($event)" @giveawayOwnerData="giveawayOwner = $event"/>
+    <Form @formData="setDataFromForm($event)" @giveawayOwnerData="setGiveawayOwnerData($event)"/>
     
     <Note />
 
@@ -36,6 +36,17 @@ export default {
   methods: {
     setDataFromForm(data) {
       this.formData = {...data};
+    },
+    setGiveawayOwnerData(data) {
+      if(data == null) {
+        this.giveawayOwner = null;
+        this.formData = {
+          data: null,
+          peopleSelectNumber: 1,
+        }
+      } else {
+        this.giveawayOwner = data;
+      }
     },
   },
 };
