@@ -13,7 +13,7 @@ export default {
   },
 
   env: {
-    apiKey: process.env.API_KEY || "444";
+    apiKey: process.env.API_KEY || "444"
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
