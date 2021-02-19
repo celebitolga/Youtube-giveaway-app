@@ -2,12 +2,17 @@
 https://youtube-giveaway-app.herokuapp.com/
 
 # Used Tecnologies
-$ Nuxt.js(Server Side - Vue.js)
-$ Youtube API
-$ Heroku(Host)
-$ Axios
-$ bootstrap-vue
-$ dotenv
+Nuxt.js(Server Side - Vue.js)
+
+Youtube API
+
+Heroku(Host)
+
+Axios
+
+bootstrap-vue
+
+dotenv
 
 ## Build Setup
 
