@@ -1,5 +1,5 @@
 <template>
-  <div class="sourceCode">
+  <div class="text-center fixed-bottom">
     <h6>
       <b-badge variant="success">
         Kaynak Kod: 
@@ -8,18 +8,3 @@
     </h6>
   </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-.sourceCode {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-</style>

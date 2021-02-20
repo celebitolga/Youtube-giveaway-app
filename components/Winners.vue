@@ -1,5 +1,5 @@
 <template>
-   <div class="mt-3">
+   <div class="mt-3 mb-5">
     <Loading v-if="loading"/>
     <div class="text-center">
       <h1 v-if="winnersData.peopleSelectNumber == 1"><b-badge variant="success">Kazanan</b-badge></h1>

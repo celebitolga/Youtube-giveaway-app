@@ -86,13 +86,13 @@ export default {
       try {
         if(this.userInput.comment.trim().length > 0) {
           // For utf-8, there is comment
-          const comment = encodeURIComponent(this.userInput.comment.trim())
-          url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&searchTerms=${ comment }&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
+          const comment = encodeURIComponent(this.userInput.comment.trim());
+          url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&searchTerms=${ comment }&order=orderUnspecified&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
         } else {
           // no comment
           url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${ videoId }&key=${ $nuxt.context.env.apiKey }&maxResults=100`;
         }
-
+        console.log(url);
         //Get peoples who did comment to video
         const data = await this.$axios.get(url)
               .then(response => response.data.items);
@@ -105,6 +105,7 @@ export default {
         this.error = false;
 
       } catch (error) {
+        console.log(error);
         this.loading = false;
         this.error = true;
       }
